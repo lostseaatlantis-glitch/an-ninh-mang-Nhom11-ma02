@@ -1,0 +1,98 @@
+CẤU HÌNH HỆ THỐNG FIREWALL PFSENSE
+1. MÔI TRƯỜNG THỰC HIỆN
+- VMware Workstation
+- pfSense 
+- Windows 10
+
+2. CẤU HÌNH MẠNG VMWARE
+VMnet8:
+- Chế độ: NAT
+- Chức năng: Kết nối Internet cho pfSense WAN
+
+VMnet1:
+- Chế độ: Host-only
+- Chức năng: Kết nối mạng LAN nội bộ
+
+3. CẤU HÌNH MÁY ẢO PFSENSE
+Adapter 1:
+- Network Connection: Custom
+- VMnet: VMnet8
+- Chức năng: WAN
+
+Adapter 2:
+- Network Connection: Custom
+- VMnet: VMnet1
+- Chức năng: LAN
+
+4. CẤU HÌNH MÁY ẢO WINDOWS 10
+Adapter:
+- Network Connection: Custom
+- VMnet: VMnet1
+
+5. CẤU HÌNH PFSENSE
+WAN:
+- Interface: em0
+- IPv4 Configuration Type: DHCP
+- WAN nhận IP tự động từ VMnet8 NAT
+
+LAN:
+- Interface: em1
+- IPv4 Address: 192.168.1.1
+- Subnet: /24
+- Subnet Mask: 255.255.255.0
+
+DHCP Server LAN:
+- Disable DHCP Server
+
+6. CẤU HÌNH WINDOWS 10
+IP Address:
+192.168.1.20
+
+Subnet Mask:
+255.255.255.0
+
+Default Gateway:
+192.168.1.1
+
+Preferred DNS Server:
+8.8.8.8
+
+7. CẤU HÌNH FIREWALL RULE
+Rule 1:
+- Action: Pass
+- Interface: LAN
+- Source: 192.168.1.20
+- Destination: any
+- Description: Allow specific IP
+
+Rule 2:
+- Action: Block
+- Interface: LAN
+- Source: LAN net
+- Destination: any
+- Description: Block all LAN traffic
+
+Rule 3:
+- Protocol: ICMP
+- Action: Block
+- Source: any
+- Destination: any
+- Description: Block ping
+
+Chặn Web:
+Action: Block 
+Protocol: TCP 
+Destination port range: 
+- From: 80 
+- To: 443 
+
+8. CẤU HÌNH NAT
+Outbound NAT:
+- Automatic Outbound NAT rule generation
+
+WAN:
+- VMnet8 NAT
+
+LAN:
+- VMnet1 Host-only
+

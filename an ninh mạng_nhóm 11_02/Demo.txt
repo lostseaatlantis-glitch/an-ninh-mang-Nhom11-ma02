@@ -1,0 +1,169 @@
+HƯỚNG DẪN DEMO HỆ THỐNG FIREWALL PFSENSE
+1. MỤC ĐÍCH DEMO
+
+- Kiểm tra hoạt động của pfSense
+- Kiểm tra kết nối mạng WAN và LAN
+- Kiểm tra Firewall Rule
+- Kiểm tra NAT
+- Kiểm tra khả năng kiểm soát truy cập
+
+2. CHUẨN BỊ DEMO
+Phần mềm sử dụng:
+- VMware Workstation
+- pfSense
+- Windows 10
+
+Máy ảo:
+- pfSense Firewall
+- Windows 10 Client
+
+3. KHỞI ĐỘNG HỆ THỐNG
+Bước 1:
+Mở VMware Workstation
+
+Bước 2:
+Khởi động máy ảo pfSense
+
+Bước 3:
+Đợi pfSense khởi động hoàn tất
+
+Bước 4:
+Kiểm tra:
+- WAN IP
+- LAN IP 192.168.1.1
+
+Bước 5:
+Khởi động máy ảo Windows 10
+
+4. KIỂM TRA CẤU HÌNH MẠNG
+Trên Windows 10 mở CMD:
+Lệnh:
+ipconfig
+
+Kiểm tra:
+- IP Address = 192.168.1.20
+- Gateway = 192.168.1.1
+- DNS = 8.8.8.8
+5. KIỂM TRA KẾT NỐI LAN
+Lệnh:
+ping 192.168.1.1
+
+Mục đích:
+- Kiểm tra kết nối giữa Windows 10 và pfSense
+
+Kết quả mong muốn:
+- Reply from 192.168.1.1
+
+6. KIỂM TRA INTERNET
+Lệnh:
+ping 8.8.8.8
+
+Mục đích:
+- Kiểm tra NAT và WAN
+
+Kết quả mong muốn:
+- Reply from 8.8.8.8
+
+7. KIỂM TRA FIREWALL RULE
+Mở pfSense WebGUI:
+Firewall → Rules → LAN
+Kiểm tra:
+- Allow Rule
+- Block Rule
+- ICMP Block Rule
+
+8. DEMO RULE CHO PHÉP IP
+Rule:
+- Allow IP 192.168.1.20
+
+Thực hiện:
+- Ping từ Windows 10
+
+Kết quả:
+- Máy được phép truy cập mạng
+
+9. DEMO RULE CHẶN ICMP
+Bật ICMP Block Rule
+Thực hiện:
+ping 192.168.1.1
+
+Kết quả:
+- Request timed out
+
+Ý nghĩa:
+- Firewall đã chặn ping thành công
+
+10. DEMO RULE CHẶN LAN
+Bật Block LAN Rule
+
+Thực hiện:
+ping 8.8.8.8
+
+Kết quả:
+- Không truy cập được Internet
+
+Ý nghĩa:
+- Firewall đã chặn truy cập mạng
+
+11. KIỂM TRA NAT
+Mở:
+Firewall → NAT → Outbound
+
+Kiểm tra:
+- Automatic Outbound NAT rule generation
+
+Ý nghĩa:
+- NAT hoạt động bình thường
+
+12. KẾT QUẢ ĐẠT ĐƯỢC
+- Triển khai thành công pfSense trên VMware
+- Cấu hình WAN và LAN thành công
+- Cấu hình NAT thành công
+- Firewall Rule hoạt động đúng
+- Kiểm soát truy cập mạng thành công
+- Demo hệ thống hoạt động ổn định
+
+13. KẾT THÚC DEMO
+- Tắt máy ảo Windows 10
+- Tắt máy ảo pfSense
+- Đóng VMware Workstation
+
+14. KIỂM TRA WEB ACCESS
+Thực hiện:
+- Mở trình duyệt trên Windows 10
+- Truy cập:
+  google.com
+
+Mục đích:
+- Kiểm tra kết nối Internet
+- Kiểm tra NAT hoạt động
+- Kiểm tra Firewall có hoặc không cho phép truy cập Web
+
+Kết quả mong muốn:
+- Truy cập được (không được) google.com
+- Website tải thành công (không thành công)
+
+15. KIỂM TRA FIREWALL LOG
+Trên pfSense WebGUI mở:
+
+Status → System Logs → Firewall
+
+Kiểm tra:
+- Các kết nối được phép
+- Các kết nối bị chặn
+- ICMP Block Log
+- LAN Block Log
+
+Mục đích:
+- Theo dõi hoạt động Firewall
+- Kiểm tra rule hoạt động đúng
+
+Kết quả mong muốn:
+- Hiển thị log truy cập mạng
+- Hiển thị log block theo rule firewall
+
+16. Ý NGHĨA DEMO
+- Firewall kiểm soát truy cập thành công
+- NAT hoạt động ổn định
+- Hệ thống ghi log đầy đủ
+- Có thể giám sát và quản lý truy cập mạng
